@@ -1,13 +1,17 @@
 package com.example.GreetingApp.service;
 
+import org.hibernate.annotations.SecondaryRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
+@Service
 public class emailService {
 
     @Autowired
     private JavaMailSender mailSender;
+
     // Method to send an email notification
     public void sendEmailNotification(String email, String token) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -21,5 +25,11 @@ public class emailService {
                 + "Best regards,\n"
                 + "The GreetingAPP Team");
         mailSender.send(message);
+    }
+    // Method to send a login notification
+    public void sendLoginNotification(String email) {
+        // In a real-world scenario, you can use a service like Twilio to send an SMS
+        // or send an email notification about the login
+        System.out.println("Login notification sent to: " + email);
     }
 }
