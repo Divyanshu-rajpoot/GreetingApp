@@ -26,10 +26,13 @@ public class emailService {
                 + "The GreetingAPP Team");
         mailSender.send(message);
     }
-    // Method to send a login notification
-    public void sendLoginNotification(String email) {
-        // In a real-world scenario, you can use a service like Twilio to send an SMS
-        // or send an email notification about the login
-        System.out.println("Login notification sent to: " + email);
+    public void sendLoginNotification(String recipientEmail) {
+        SimpleMailMessage emailMessage = new SimpleMailMessage();
+        emailMessage.setTo(recipientEmail);
+        emailMessage.setSubject("Successful Login Notification");
+        emailMessage.setText("Dear User,\n\nYou have successfully logged into your account. If this was not you, please contact support immediately.\n\nBest Regards,\nThe GreetingApp");
+
+        mailSender.send(emailMessage);
+        System.out.println("Login notification email successfully sent to: " + recipientEmail);
     }
 }
