@@ -21,6 +21,9 @@ public class AuthenticationService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
+    private emailService emailService;
+
+    @Autowired
     private jutil jutil;
 
     // Secret key for JWT
@@ -47,7 +50,7 @@ public class AuthenticationService {
         String token = jutil.generateToken(user);
 
         // Send Email Notification to the User
-       
+        emailService.sendEmailNotification(user.getEmail(), token);
         return new ResponseDTO("success", "User registered successfully. A verification token has been sent to your email.");
     }
 
@@ -65,8 +68,16 @@ public class AuthenticationService {
         // Generate a new JWT token
         String token = jutil.generateToken(user);
 
+        // Send login notification (this could be an email or SMS)
+        sendLoginNotification(user.getEmail());
 
         return new ResponseDTO("success", "User logged in successfully.", token);
     }
 
+    // Method to send a login notification
+    private void sendLoginNotification(String email) {
+        // In a real-world scenario, you can use a service like Twilio to send an SMS
+        // or send an email notification about the login
+        System.out.println("Login notification sent to: " + email);
+    }
 }
